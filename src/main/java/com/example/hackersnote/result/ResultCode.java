@@ -1,10 +1,17 @@
 package com.example.hackersnote.result;
 
-/**
- * 结果状态码的枚举类：统一配置结果状态码
- */
-public enum ResultCode {
+import lombok.Getter;
 
+/**
+ * 结果状态码的枚举类：统一配置结果状态码.
+ * <p>
+ * 该枚举类用于定义系统中各种操作的状态码和对应的描述信息。状态码根据功能模块进行分类，
+ * 例如通用状态码、用户相关状态码、分类操作状态码以及博文操作状态码等.
+ * 每个状态码都具有唯一的整数值和对应的消息文本，便于返回 API 调用结果时的统一处理.
+ * </p>
+ */
+@Getter
+public enum ResultCode {
     /* 通用结果状态码 */
     SUCCESS(200, "成功"),
     FAIL(-1, "失败"),
@@ -73,17 +80,13 @@ public enum ResultCode {
     private final int code; // 状态码
     private final String message; // 结果描述信息
 
-    ResultCode(int code, String message) {
-        this.code = code;
-        this.message = message;
-    } // end ResultCode(code, message)
-
-    public int getCode() {
-        return code;
-    } // end getCode()
-
-    public String getMessage() {
-        return message;
-    } // end getMessage()
-
-} // end enum ResultCode
+    /**
+     * 构造方法：为每个枚举常量指定状态码和描述信息.
+     * @param statusCode 状态码
+     * @param msg        状态码描述信息
+     */
+    ResultCode(final int statusCode, final String msg) {
+        this.code = statusCode;
+        this.message = msg;
+    }
+}

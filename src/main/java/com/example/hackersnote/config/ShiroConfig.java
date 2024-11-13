@@ -11,13 +11,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Shiro 配置类：整合 SecurityManager、Realm、SHA-256 加密等
+ * Shiro 配置类：整合 SecurityManager、Realm、SHA-256 加密等.
  */
 @Configuration
 public class ShiroConfig {
-
     /**
-     * 创建 Realm，并添加密码比较器
+     * 创建 Realm，并添加密码比较器.
      *
      * @return Realm
      */
@@ -26,7 +25,7 @@ public class ShiroConfig {
         UserRealm userRealm = new UserRealm();
         userRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return userRealm;
-    } // end UserRealm userRealm()
+    }
 
     /**
      * 创建密码匹配器.
@@ -39,33 +38,32 @@ public class ShiroConfig {
         credentialsMatcher.setHashAlgorithmName("md5"); // 使用 md5 加密
         credentialsMatcher.setHashIterations(2); // 迭代次数
         return credentialsMatcher;
-    } // end HashedCredentialsMatcher hashedCredentialsMatcher()
+    }
 
     /**
-     * 创建 SecurityManager，并绑定 Realm
+     * 创建 SecurityManager，并绑定 Realm.
      *
      * @param userRealm Realm
      * @return Shiro 安全管理器
      */
     @Bean
-    public DefaultSecurityManager securityManager(UserRealm userRealm) {
+    public DefaultSecurityManager securityManager(final UserRealm userRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(userRealm);
         SecurityUtils.setSecurityManager(securityManager);
         return securityManager;
-    } // end securityManager(userRealm)
+    }
 
     /**
-     * 开启对 Shiro 的注解的支持（如 @RequiresRoles,@RequiresPermissions），不开启的话权限验证就会失效
+     * 开启对 Shiro 的注解的支持（如 @RequiresRoles,@RequiresPermissions），不开启的话权限验证就会失效.
      *
      * @param securityManager SecurityManager
      * @return 授权属性通知器
      */
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(final SecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
-    } // end authorizationAttributeSourceAdvisor()
-
-} // end class ShiroConfig
+    }
+}
